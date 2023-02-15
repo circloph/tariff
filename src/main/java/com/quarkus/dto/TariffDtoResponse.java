@@ -1,40 +1,24 @@
-package com.quarkus.model;
+package com.quarkus.dto;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-@Entity
-@Table(name = "tariffs")
-public class Tariff {
+public class TariffDtoResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @CreationTimestamp
     private Date dateCreated;
-
-    @NotNull
-    @Size(max = 128)
-    @Column(unique = true)
     private String name;
-
-    @NotNull
-    @Column(name="archived", nullable = false)
     private Boolean archived;
-
-    @NotNull
-    @Column(name="deleted", nullable = false)
     private Boolean deleted;
 
-    public Tariff() {
-    }
 
-    public Tariff(String name, Boolean archived, Boolean deleted) {
+    public TariffDtoResponse(Long id, Date dateCreated, String name, Boolean archived, Boolean deleted) {
+        this.id = id;
+        this.dateCreated = dateCreated;
         this.name = name;
         this.archived = archived;
         this.deleted = deleted;
@@ -79,5 +63,4 @@ public class Tariff {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
-
 }
