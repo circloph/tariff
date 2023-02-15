@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Table(name = "package")
+@Table(name = "packages")
 public class Package {
 
     @Id
@@ -28,11 +28,61 @@ public class Package {
     private PackageCategory category;
 
     @NotNull
-    @Column(name="value")
-    private Long value;
+    @Column(name="meaning")
+    private Long meaning;
 
     @NotNull
     @Column(name="deleted", nullable = false)
     private Boolean deleted;
 
+    public Package() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public PackageCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(PackageCategory category) {
+        this.category = category;
+    }
+
+    public Long getMeaning() {
+        return meaning;
+    }
+
+    public void setMeaning(Long meaning) {
+        this.meaning = meaning;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 }
