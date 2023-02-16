@@ -1,64 +1,28 @@
-package com.quarkus.model;
+package com.quarkus.dto;
 
-import org.hibernate.annotations.CreationTimestamp;
+import com.quarkus.model.PackageCategory;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
-@Entity
-@Table(name = "packages")
-public class Package {
+public class PackageDtoRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @CreationTimestamp
-    private Date dateCreated;
-
-    @NotNull
-    @Size(max = 128)
     private String name;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name="category")
     private PackageCategory category;
-
-    @NotNull
-    @Column(name="meaning")
     private Long meaning;
-
-    @NotNull
-    @Column(name="deleted", nullable = false)
     private Boolean deleted;
 
-    public Package() {
-    }
-
-    public Package(String name, PackageCategory category, Long meaning, Boolean deleted) {
+    public PackageDtoRequest(String name, PackageCategory category, Long meaning, Boolean deleted) {
         this.name = name;
         this.category = category;
         this.meaning = meaning;
         this.deleted = deleted;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    public PackageDtoRequest() {
     }
 
     public String getName() {
