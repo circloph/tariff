@@ -7,4 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class TariffRepository implements PanacheRepository<Tariff> {
+    public Tariff findByName(String name) {
+        return find("name", name).firstResult();
+    }
 }

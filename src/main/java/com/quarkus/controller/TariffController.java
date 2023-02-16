@@ -2,13 +2,13 @@ package com.quarkus.controller;
 
 import com.quarkus.dto.TariffDtoRequest;
 import com.quarkus.dto.TariffDtoResponse;
+import com.quarkus.exception.CustomValidationException;
 import com.quarkus.service.TariffService;
-import org.jboss.resteasy.annotations.Body;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/tariffs")
@@ -23,7 +23,7 @@ public class TariffController {
     }
 
     @POST
-    public TariffDtoResponse addTariff(TariffDtoRequest request) {
+    public TariffDtoResponse addTariff(@Valid TariffDtoRequest request) throws CustomValidationException {
         return tariffService.addTariff(request);
     }
 

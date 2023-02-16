@@ -1,10 +1,12 @@
 package com.quarkus.dto;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class TariffDtoRequest {
 
+    @NotBlank(message="NAME_BLANK")
     private String name;
     private Boolean archived;
     private Boolean deleted;

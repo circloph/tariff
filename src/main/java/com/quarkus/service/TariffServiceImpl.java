@@ -2,6 +2,8 @@ package com.quarkus.service;
 
 import com.quarkus.dto.TariffDtoRequest;
 import com.quarkus.dto.TariffDtoResponse;
+import com.quarkus.exception.ErrorCode;
+import com.quarkus.exception.CustomValidationException;
 import com.quarkus.model.Tariff;
 import com.quarkus.repository.TariffRepository;
 
@@ -32,7 +34,10 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
-    public TariffDtoResponse addTariff(TariffDtoRequest request) {
+    public TariffDtoResponse addTariff(TariffDtoRequest request) throws CustomValidationException {
+        if (repository.findByName(request.getName()) != null) {
+            throw new CustomValidationException(ErrorCode.NAME_TAKEN);
+        }
         Tariff t = new Tariff(request.getName(), request.getArchived(), request.getDeleted());
         repository.persist(t);
         return new TariffDtoResponse(t.getId(), t.getDateCreated(), t.getName(), t.getArchived(), t.getDeleted());
