@@ -10,9 +10,14 @@ import javax.validation.constraints.Size;
 
 public class PackageDtoRequest {
 
+    @Size(max = 128, message = "TOO_LONG_NAME")
+    @NotNull(message = "REQUIRED_FIELD")
     private String name;
+    @NotNull(message = "REQUIRED_FIELD")
     private PackageCategory category;
+    @NotNull(message = "REQUIRED_FIELD")
     private Long meaning;
+    @NotNull(message = "REQUIRED_FIELD")
     private Boolean deleted;
 
     public PackageDtoRequest(String name, PackageCategory category, Long meaning, Boolean deleted) {

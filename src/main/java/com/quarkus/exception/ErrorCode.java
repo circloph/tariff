@@ -3,7 +3,9 @@ package com.quarkus.exception;
 public enum ErrorCode {
 
     NAME_TAKEN("this name is already taken", "name"),
-    NAME_BLANK("Name may not be blank", "name");
+    NAME_BLANK("Name may not be blank", "name"),
+    TOO_LONG_NAME("Size of name must be between 0 and 128", "name"),
+    REQUIRED_FIELD("The field is required", "");
 
     private String message;
     private String field;
