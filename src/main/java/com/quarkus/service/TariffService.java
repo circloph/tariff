@@ -1,5 +1,6 @@
 package com.quarkus.service;
 
+import com.quarkus.dto.PackageDtoRequest;
 import com.quarkus.dto.TariffDtoRequest;
 import com.quarkus.dto.TariffDtoResponse;
 import com.quarkus.exception.CustomValidationException;
@@ -17,6 +18,5 @@ public interface TariffService {
 
     boolean deleteTariffById(Long id);
 
-
-
+    TariffDtoResponse addPackageToTariff(Long id, PackageDtoRequest request);
 }

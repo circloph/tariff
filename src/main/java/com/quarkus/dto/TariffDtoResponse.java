@@ -1,11 +1,7 @@
 package com.quarkus.dto;
 
-import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 public class TariffDtoResponse {
 
@@ -15,6 +11,8 @@ public class TariffDtoResponse {
     private Boolean archived;
     private Boolean deleted;
 
+    private List<PackageDtoResponse> packages;
+
 
     public TariffDtoResponse(Long id, Date dateCreated, String name, Boolean archived, Boolean deleted) {
         this.id = id;
@@ -22,6 +20,23 @@ public class TariffDtoResponse {
         this.name = name;
         this.archived = archived;
         this.deleted = deleted;
+    }
+
+    public TariffDtoResponse(Long id, Date dateCreated, String name, Boolean archived, Boolean deleted, List<PackageDtoResponse> packages) {
+        this.id = id;
+        this.dateCreated = dateCreated;
+        this.name = name;
+        this.archived = archived;
+        this.deleted = deleted;
+        this.packages = packages;
+    }
+
+    public List<PackageDtoResponse> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(List<PackageDtoResponse> packages) {
+        this.packages = packages;
     }
 
     public Long getId() {

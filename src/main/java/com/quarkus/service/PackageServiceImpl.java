@@ -2,11 +2,7 @@ package com.quarkus.service;
 
 import com.quarkus.dto.PackageDtoRequest;
 import com.quarkus.dto.PackageDtoResponse;
-import com.quarkus.dto.TariffDtoResponse;
-import com.quarkus.exception.CustomValidationException;
-import com.quarkus.exception.ErrorCode;
 import com.quarkus.model.Package;
-import com.quarkus.model.Tariff;
 import com.quarkus.repository.PackageRepository;
 
 import javax.enterprise.context.ApplicationScoped;

@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "tariffs")
@@ -31,6 +32,9 @@ public class Tariff {
     @Column(name="deleted", nullable = false)
     private Boolean deleted;
 
+    @OneToMany(mappedBy = "tariff", fetch = FetchType.EAGER)
+    private List<Package> packages;
+
     public Tariff() {
     }
 
@@ -38,6 +42,14 @@ public class Tariff {
         this.name = name;
         this.archived = archived;
         this.deleted = deleted;
+    }
+
+    public List<Package> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(List<Package> packages) {
+        this.packages = packages;
     }
 
     public Long getId() {

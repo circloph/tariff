@@ -1,8 +1,11 @@
 package com.quarkus.controller;
 
+import com.quarkus.dto.PackageDtoRequest;
 import com.quarkus.dto.TariffDtoRequest;
 import com.quarkus.dto.TariffDtoResponse;
 import com.quarkus.exception.CustomValidationException;
+import com.quarkus.model.Tariff;
+import com.quarkus.repository.TariffRepository;
 import com.quarkus.service.TariffService;
 
 import javax.inject.Inject;
@@ -37,5 +40,11 @@ public class TariffController {
     @Path("/{id}")
     public void deleteTariffById(@PathParam(value = "id") Long id) {
         tariffService.deleteTariffById(id);
+    }
+
+    @POST
+    @Path("/{id}")
+    public TariffDtoResponse addPackageToTariff(@PathParam("id") Long id, PackageDtoRequest request) {
+        return tariffService.addPackageToTariff(id, request);
     }
 }

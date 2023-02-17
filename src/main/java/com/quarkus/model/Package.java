@@ -1,11 +1,13 @@
 package com.quarkus.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "packages")
@@ -35,6 +37,11 @@ public class Package {
     @Column(name="deleted", nullable = false)
     private Boolean deleted;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="tariff_id", nullable = false)
+    private Tariff tariff;
+
     public Package() {
     }
 
@@ -43,6 +50,14 @@ public class Package {
         this.category = category;
         this.meaning = meaning;
         this.deleted = deleted;
+    }
+
+    public Tariff getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(Tariff tariff) {
+        this.tariff = tariff;
     }
 
     public Long getId() {
