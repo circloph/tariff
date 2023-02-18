@@ -4,6 +4,8 @@ import com.quarkus.dto.PackageDtoRequest;
 import com.quarkus.dto.TariffDtoRequest;
 import com.quarkus.dto.TariffDtoResponse;
 import com.quarkus.exception.CustomValidationException;
+import com.quarkus.model.QueryParams;
+import com.quarkus.model.Tariff;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
@@ -19,4 +21,6 @@ public interface TariffService {
     boolean deleteTariffById(Long id);
 
     TariffDtoResponse addPackageToTariff(Long id, PackageDtoRequest request);
+
+    List<TariffDtoResponse> getTariffs(QueryParams queryParams);
 }

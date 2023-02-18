@@ -7,6 +7,7 @@ import com.quarkus.dto.TariffDtoResponse;
 import com.quarkus.exception.ErrorCode;
 import com.quarkus.exception.CustomValidationException;
 import com.quarkus.model.Package;
+import com.quarkus.model.QueryParams;
 import com.quarkus.model.Tariff;
 import com.quarkus.repository.PackageRepository;
 import com.quarkus.repository.TariffRepository;
@@ -33,9 +34,9 @@ public class TariffServiceImpl implements TariffService {
     public List<TariffDtoResponse> getAllTariffs() {
         List<TariffDtoResponse> tariffDtoResponses = new ArrayList<>();
         List<Tariff> tariffs = tariffRepository.findAll().list();
-        for (Tariff tariff: tariffs) {
+        for (Tariff tariff : tariffs) {
             List<PackageDtoResponse> responses = new ArrayList<>();
-            for(Package p: tariff.getPackages()) {
+            for (Package p : tariff.getPackages()) {
                 responses.add(new PackageDtoResponse(p.getId(), p.getDateCreated(), p.getName(), p.getCategory(), p.getMeaning(), p.getDeleted()));
             }
             tariffDtoResponses.add(new TariffDtoResponse(tariff.getId(), tariff.getDateCreated(),
@@ -62,7 +63,7 @@ public class TariffServiceImpl implements TariffService {
         t.setDeleted(request.getDeleted());
         tariffRepository.persist(t);
         List<PackageDtoResponse> responses = new ArrayList<>();
-        for(Package p: t.getPackages()) {
+        for (Package p : t.getPackages()) {
             responses.add(new PackageDtoResponse(p.getId(), p.getDateCreated(), p.getName(), p.getCategory(), p.getMeaning(), p.getDeleted()));
         }
         return new TariffDtoResponse(t.getId(), t.getDateCreated(), t.getName(), t.getArchived(), t.getDeleted(), responses);
@@ -87,9 +88,24 @@ public class TariffServiceImpl implements TariffService {
 
         Tariff fromDB = tariffRepository.findById(id);
 
-        for (Package pack: fromDB.getPackages()) {
+        for (Package pack : fromDB.getPackages()) {
             packages.add(new PackageDtoResponse(pack.getId(), pack.getDateCreated(), pack.getName(), pack.getCategory(), pack.getMeaning(), pack.getDeleted()));
         }
         return new TariffDtoResponse(t.getId(), t.getDateCreated(), t.getName(), t.getArchived(), t.getDeleted(), packages);
+    }
+
+    @Override
+    public List<TariffDtoResponse> getTariffs(QueryParams queryParams) {
+        List<TariffDtoResponse> tariffDtoResponses = new ArrayList<>();
+        List<Tariff> tariffs =  tariffRepository.getTariffs(queryParams);
+        for (Tariff tariff : tariffs) {
+            List<PackageDtoResponse> responses = new ArrayList<>();
+            for (Package p : tariff.getPackages()) {
+                responses.add(new PackageDtoResponse(p.getId(), p.getDateCreated(), p.getName(), p.getCategory(), p.getMeaning(), p.getDeleted()));
+            }
+            tariffDtoResponses.add(new TariffDtoResponse(tariff.getId(), tariff.getDateCreated(),
+                    tariff.getName(), tariff.getArchived(), tariff.getDeleted(), responses));
+        }
+        return tariffDtoResponses;
     }
 }
