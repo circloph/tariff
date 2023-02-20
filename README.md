@@ -1,5 +1,14 @@
 # tarif
 
+---
+Сервис содержит две модели Tariff и Package со связью One to Many. Для моделей созданы контроллеры, сервисы,
+репозитории, DTO. Для валидации ошибок созданы классы, которые ловят исключения и отдают читаемый ответ в теле.
+Для построения сложного SQL запроса в методе getTariffs использовался QueryDSL. Для тестирования была использована
+библиотека Rest Assured, Mockito, jUnit, также создана база данных H2 для тестов.
+
+
+---
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
