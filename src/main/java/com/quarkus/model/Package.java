@@ -2,6 +2,8 @@ package com.quarkus.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -39,13 +41,23 @@ public class Package {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="tariff_id", nullable = false)
+    @JoinColumn(name="tariff_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Tariff tariff;
 
     public Package() {
     }
 
     public Package(String name, PackageCategory category, Long meaning, Boolean deleted) {
+        this.name = name;
+        this.category = category;
+        this.meaning = meaning;
+        this.deleted = deleted;
+    }
+
+    public Package(Long id, Date dateCreated, String name, PackageCategory category, Long meaning, Boolean deleted) {
+        this.id = id;
+        this.dateCreated = dateCreated;
         this.name = name;
         this.category = category;
         this.meaning = meaning;

@@ -1,5 +1,8 @@
 package com.quarkus.exception;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public class Error {
 
     private String errorCode;

@@ -16,11 +16,11 @@ public interface TariffService {
 
     TariffDtoResponse addTariff(TariffDtoRequest request) throws CustomValidationException;
 
-    TariffDtoResponse updateTariff(Long id, TariffDtoRequest request);
+    TariffDtoResponse updateTariff(Long id, TariffDtoRequest request) throws CustomValidationException;
 
-    boolean deleteTariffById(Long id);
+    boolean deleteTariffById(Long id) throws CustomValidationException;
 
-    TariffDtoResponse addPackageToTariff(Long id, PackageDtoRequest request);
+    TariffDtoResponse addPackageToTariff(Long id, PackageDtoRequest request) throws CustomValidationException;
 
     List<TariffDtoResponse> getTariffs(QueryParams queryParams);
 }

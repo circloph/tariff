@@ -22,11 +22,6 @@ public class TariffController {
     @Inject
     private TariffService tariffService;
 
-    @GET
-    public List<TariffDtoResponse> getAllTariffs() {
-        return tariffService.getAllTariffs();
-    }
-
     @POST
     public TariffDtoResponse addTariff(@Valid TariffDtoRequest request) throws CustomValidationException {
         return tariffService.addTariff(request);
@@ -34,24 +29,23 @@ public class TariffController {
 
     @PUT
     @Path("/{id}")
-    public TariffDtoResponse updateTariff(@PathParam(value = "id") Long id, TariffDtoRequest request) {
+    public TariffDtoResponse updateTariff(@PathParam(value = "id") Long id, TariffDtoRequest request) throws CustomValidationException {
         return tariffService.updateTariff(id, request);
     }
 
     @DELETE
     @Path("/{id}")
-    public void deleteTariffById(@PathParam(value = "id") Long id) {
+    public void deleteTariffById(@PathParam(value = "id") Long id) throws CustomValidationException {
         tariffService.deleteTariffById(id);
     }
 
     @POST
     @Path("/{id}")
-    public TariffDtoResponse addPackageToTariff(@PathParam("id") Long id, PackageDtoRequest request) {
+    public TariffDtoResponse addPackageToTariff(@PathParam("id") Long id, PackageDtoRequest request) throws CustomValidationException {
         return tariffService.addPackageToTariff(id, request);
     }
 
     @GET
-    @Path("/getTariffs")
     public List<TariffDtoResponse> getTariffs(@QueryParam("name") String name, @QueryParam("category") String category,
                                               @QueryParam("isArchive") Boolean isArchive) {
         return tariffService.getTariffs(new QueryParams(name, category, isArchive));

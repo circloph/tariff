@@ -1,8 +1,10 @@
 package com.quarkus.dto;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import java.util.Date;
 import java.util.List;
-
+@RegisterForReflection
 public class TariffDtoResponse {
 
     private Long id;

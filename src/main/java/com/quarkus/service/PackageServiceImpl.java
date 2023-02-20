@@ -2,6 +2,8 @@ package com.quarkus.service;
 
 import com.quarkus.dto.PackageDtoRequest;
 import com.quarkus.dto.PackageDtoResponse;
+import com.quarkus.exception.CustomValidationException;
+import com.quarkus.exception.ErrorCode;
 import com.quarkus.model.Package;
 import com.quarkus.repository.PackageRepository;
 
@@ -45,7 +47,10 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public boolean deleteTariffById(Long id) {
-        return repository.deleteById(id);
+    public boolean deletePackageById(Long id) throws CustomValidationException {
+        if (repository.findById(id) != null) {
+            return repository.deleteById(id);
+        }
+        throw new CustomValidationException(ErrorCode.INVALID_PACKAGE_ID);
     }
 }

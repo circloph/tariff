@@ -1,10 +1,12 @@
 package com.quarkus.dto;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+@RegisterForReflection
 public class TariffDtoRequest {
 
     @NotBlank(message="NAME_BLANK")

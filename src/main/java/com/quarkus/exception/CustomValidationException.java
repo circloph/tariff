@@ -1,7 +1,10 @@
 package com.quarkus.exception;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import java.io.Serializable;
 
+@RegisterForReflection
 public class CustomValidationException extends Exception implements Serializable {
     private Error error;
 

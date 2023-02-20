@@ -32,7 +32,7 @@ public class TariffRepository implements PanacheRepository<Tariff> {
         }
 
         JPAQuery<?> query = new JPAQuery<Void>(Panache.getEntityManager());
-        return (List<Tariff>) query.from(qTariff).innerJoin(qTariff.packages, qPackage).where(booleanBuilder).fetch();
+        return (List<Tariff>) query.from(qTariff).innerJoin(qTariff.packages, qPackage).where(booleanBuilder).distinct().fetch();
     }
 
 }

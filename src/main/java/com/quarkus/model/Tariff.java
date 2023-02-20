@@ -1,15 +1,19 @@
 package com.quarkus.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "tariffs")
+@Table(name = "tariffs", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "archived" }) })
 public class Tariff {
 
     @Id
@@ -21,24 +25,40 @@ public class Tariff {
 
     @NotNull
     @Size(max = 128)
-    @Column(unique = true)
+    @Column(name = "name")
     private String name;
 
-    @NotNull
-    @Column(name="archived", nullable = false)
+    @Column(name="archived")
+    @ColumnDefault(value = "false")
     private Boolean archived;
 
-    @NotNull
-    @Column(name="deleted", nullable = false)
+    @Column(name="deleted")
+    @ColumnDefault(value = "false")
     private Boolean deleted;
 
     @OneToMany(mappedBy = "tariff", fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Package> packages;
 
     public Tariff() {
     }
 
     public Tariff(String name, Boolean archived, Boolean deleted) {
+        this.name = name;
+        this.archived = archived;
+        this.deleted = deleted;
+    }
+
+    public Tariff(String name, Boolean archived, Boolean deleted, List<Package> packages) {
+        this.name = name;
+        this.archived = archived;
+        this.deleted = deleted;
+        this.packages = packages;
+    }
+
+    public Tariff(Long id, Date dateCreated, String name, Boolean archived, Boolean deleted) {
+        this.id = id;
+        this.dateCreated = dateCreated;
         this.name = name;
         this.archived = archived;
         this.deleted = deleted;

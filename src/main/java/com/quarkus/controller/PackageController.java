@@ -2,8 +2,6 @@ package com.quarkus.controller;
 
 import com.quarkus.dto.PackageDtoRequest;
 import com.quarkus.dto.PackageDtoResponse;
-import com.quarkus.dto.TariffDtoRequest;
-import com.quarkus.dto.TariffDtoResponse;
 import com.quarkus.exception.CustomValidationException;
 import com.quarkus.service.PackageService;
 
@@ -38,8 +36,8 @@ public class PackageController {
 
     @DELETE
     @Path("/{id}")
-    public void deleteTariffById(@PathParam(value = "id") Long id) {
-        packageService.deleteTariffById(id);
+    public void deletePackageById(@PathParam(value = "id") Long id) throws CustomValidationException {
+        packageService.deletePackageById(id);
     }
 
 }

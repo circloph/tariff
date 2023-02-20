@@ -1,5 +1,8 @@
 package com.quarkus.model;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
+@RegisterForReflection
 public class QueryParams {
 
     private String name;

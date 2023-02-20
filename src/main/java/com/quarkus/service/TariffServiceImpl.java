@@ -47,38 +47,50 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public TariffDtoResponse addTariff(TariffDtoRequest request) throws CustomValidationException {
-        if (tariffRepository.findByName(request.getName()) != null) {
+        Tariff tariff = tariffRepository.findByName(request.getName());
+        if (tariff != null && tariff.getArchived().equals(request.getArchived())) {
             throw new CustomValidationException(ErrorCode.NAME_TAKEN);
         }
-        Tariff t = new Tariff(request.getName(), request.getArchived(), request.getDeleted());
+        Tariff t = new Tariff(request.getName(), request.getArchived(), request.getDeleted(), new ArrayList<>());
         tariffRepository.persist(t);
         return new TariffDtoResponse(t.getId(), t.getDateCreated(), t.getName(), t.getArchived(), t.getDeleted());
     }
 
     @Override
-    public TariffDtoResponse updateTariff(Long id, TariffDtoRequest request) {
+    public TariffDtoResponse updateTariff(Long id, TariffDtoRequest request) throws CustomValidationException {
         Tariff t = tariffRepository.findById(id);
-        t.setName(request.getName());
-        t.setArchived(request.getArchived());
-        t.setDeleted(request.getDeleted());
-        tariffRepository.persist(t);
-        List<PackageDtoResponse> responses = new ArrayList<>();
-        for (Package p : t.getPackages()) {
-            responses.add(new PackageDtoResponse(p.getId(), p.getDateCreated(), p.getName(), p.getCategory(), p.getMeaning(), p.getDeleted()));
+        if (t != null) {
+            t.setName(request.getName());
+            t.setArchived(request.getArchived());
+            t.setDeleted(request.getDeleted());
+            tariffRepository.persist(t);
+            List<PackageDtoResponse> responses = new ArrayList<>();
+            if (t.getPackages() != null) {
+                for (Package p : t.getPackages()) {
+                    responses.add(new PackageDtoResponse(p.getId(), p.getDateCreated(), p.getName(), p.getCategory(), p.getMeaning(), p.getDeleted()));
+                }
+            }
+            return new TariffDtoResponse(t.getId(), t.getDateCreated(), t.getName(), t.getArchived(), t.getDeleted(), responses);
         }
-        return new TariffDtoResponse(t.getId(), t.getDateCreated(), t.getName(), t.getArchived(), t.getDeleted(), responses);
+        throw new CustomValidationException(ErrorCode.INVALID_TARIFF_ID);
     }
 
     @Override
-    public boolean deleteTariffById(Long id) {
-        return tariffRepository.deleteById(id);
+    public boolean deleteTariffById(Long id) throws CustomValidationException {
+        if (tariffRepository.findById(id) != null) {
+            return tariffRepository.deleteById(id);
+        }
+        throw new CustomValidationException(ErrorCode.INVALID_TARIFF_ID);
     }
 
     @Override
-    public TariffDtoResponse addPackageToTariff(Long id, PackageDtoRequest request) {
+    public TariffDtoResponse addPackageToTariff(Long id, PackageDtoRequest request) throws CustomValidationException {
         Package p = new Package(request.getName(), request.getCategory(), request.getMeaning(), request.getDeleted());
 
         Tariff t = tariffRepository.findById(id);
+        if (t == null) {
+            throw new CustomValidationException(ErrorCode.INVALID_TARIFF_ID);
+        }
         p.setTariff(t);
         packageRepository.persist(p);
         t.getPackages().add(p);
@@ -97,7 +109,7 @@ public class TariffServiceImpl implements TariffService {
     @Override
     public List<TariffDtoResponse> getTariffs(QueryParams queryParams) {
         List<TariffDtoResponse> tariffDtoResponses = new ArrayList<>();
-        List<Tariff> tariffs =  tariffRepository.getTariffs(queryParams);
+        List<Tariff> tariffs = tariffRepository.getTariffs(queryParams);
         for (Tariff tariff : tariffs) {
             List<PackageDtoResponse> responses = new ArrayList<>();
             for (Package p : tariff.getPackages()) {

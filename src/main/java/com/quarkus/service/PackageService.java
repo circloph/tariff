@@ -2,8 +2,6 @@ package com.quarkus.service;
 
 import com.quarkus.dto.PackageDtoRequest;
 import com.quarkus.dto.PackageDtoResponse;
-import com.quarkus.dto.TariffDtoRequest;
-import com.quarkus.dto.TariffDtoResponse;
 import com.quarkus.exception.CustomValidationException;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -18,6 +16,6 @@ public interface PackageService {
 
     PackageDtoResponse updatePackage(Long id, PackageDtoRequest request);
 
-    boolean deleteTariffById(Long id);
+    boolean deletePackageById(Long id) throws CustomValidationException;
 
 }

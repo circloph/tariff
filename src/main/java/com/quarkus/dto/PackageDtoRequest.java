@@ -1,13 +1,14 @@
 package com.quarkus.dto;
 
 import com.quarkus.model.PackageCategory;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+@RegisterForReflection
 public class PackageDtoRequest {
 
     @Size(max = 128, message = "TOO_LONG_NAME")
